@@ -40,3 +40,4 @@ Shader "Custom/VideoAlpha" {
 }
 ```
 
+source: http://forum.unity3d.com/threads/chroma-key-shader.48938/
