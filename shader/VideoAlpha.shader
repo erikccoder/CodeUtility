@@ -1,33 +1,40 @@
-Shader "Custom/VideoAlpha" {
-   Properties {
-      _MainTex ("Base (RGB)", 2D) = "white" {}
-      _AlphaOffsetX ("alpha offset x", float) = 0.5
-      _AlphaOffsetY ("alpha offset y", float) = 0
-      _Cutoff ("Cutoff", Range (0,1)) = .5
-   }
-   SubShader {
-   AlphaTest Less [_Cutoff]
-         CGPROGRAM
-         #pragma surface surf Lambert
+Shader "Custom/HorizontalGrayscaleAlphaMask" {
+ 
+    Properties
+    {
+        _MainTex("Main Texture",2D) = "white"{}
+		_AlphaOffset ("Alpha offset", float) = 0.5
+    }
    
-         sampler2D _MainTex;
-         float _AlphaOffsetX;
-         float _AlphaOffsetY;
+    SubShader
+    {
+       Tags {"Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"}
+       
+        CGPROGRAM
+        #pragma surface surf Lambert alpha
+        
+            struct Input
+            {
+                float4 color : COLOR;
+                float2 uv_MainTex;
+            };
+           
+            sampler2D _MainTex;
+			float _AlphaOffset;
    
-         struct Input {
-            float2 uv_MainTex;
-         };
+            void surf (Input IN, inout SurfaceOutput o)
+            {
+				half4 c = tex2D(_MainTex, IN.uv_MainTex);			
+                half4 a = tex2D (_MainTex, IN.uv_MainTex + float2(_AlphaOffset, 0) );	
+                if(IN.uv_MainTex.x < _AlphaOffset)
+                {            
+					o.Albedo = c.rgb;
+					o.Alpha  = Luminance(a.rgb);
+				}
+            }
+        ENDCG
+    }
    
-         void surf (Input IN, inout SurfaceOutput o) {
-            half4 c = tex2D (_MainTex, IN.uv_MainTex);
-            IN.uv_MainTex.x += _AlphaOffsetX;
-            IN.uv_MainTex.y += _AlphaOffsetY;
-            half4 d = tex2D (_MainTex, IN.uv_MainTex);
-            o.Albedo = c.rgb;
-            o.Alpha = (d.r*-1)+1;
-         }
-         ENDCG
-     
-   }
-   FallBack "Diffuse"
+    Fallback "Diffuse"
+ 
 }
