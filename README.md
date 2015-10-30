@@ -1,2 +1,2 @@
-# Unity3dUtility
-Utilities for Unity3d
+# CodeUtility
+Utilities for Openframeworks, Unity3d
