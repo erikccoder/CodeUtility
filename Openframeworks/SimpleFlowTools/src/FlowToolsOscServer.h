@@ -9,7 +9,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxThreadedOSCReceiver.h"
+#include "ofxOsc.h"
 #include "SimpleFlowTools.h"
 
 
