@@ -85,12 +85,12 @@ void SimpleFlowTools::draw(int x, int y)
     flowPanel_.draw();
     if(isUpdated_)
     {
-        stringstream ss;
+        //stringstream ss;
 //        ss << "opticalFlow_.getAverageFlow: " << (int)(opticalFlow_.getAverageFlow() * 1000) / 1000.0;
         
         velocityField_.draw(x, y, drawWidth_, drawHeight_);
         
-        ofDrawBitmapStringHighlight(ss.str(), 0, 10);
+        //ofDrawBitmapStringHighlight(ss.str(), 0, 10);
     }
 }
 
