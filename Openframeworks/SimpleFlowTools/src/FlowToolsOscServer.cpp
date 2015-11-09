@@ -45,7 +45,7 @@ void FlowToolsOscServer::createPreviewRect(ofRectangle rect)
     
     preview->position = rect.position * flowSize;
     preview->width    = rect.width * flowSize.x;
-    preview->height   = rect.width * flowSize.y;
+    preview->height   = rect.height * flowSize.y;
     
     previewRect.push_back(preview);
 }
